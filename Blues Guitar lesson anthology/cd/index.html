@@ -1,18 +1,168 @@
 
+
 <!DOCTYPE html>
 <!-- created by blp.bat -->
 <html>
+<head>
+<script src = "bls.js"></script>	
+</head>
 <body>
 
 <div id="blVer">
 <a href = "https://littleflute.github.io/blog/html/tools/blp/" target = "_blank">home</a>-
 <a href = "https://github.com/littleflute/blog/new/master/html/tools/blp" target = "_blank">new</a>-
-<a href = "https://github.com/littleflute/blog/issues/229" target="_blank">log</a> - v0.7.2
-:u: blMp4Player.
+<a href = "https://github.com/littleflute/blog/issues/229" target="_blank">log</a> - v0.9.8
+:+: this.blCss = css;
+<span id = "blDbg"></span>
 </div>
+
+<textarea id = "blCss" style = "display:none;">
+this.blCss = css;
+this.blCss(this,{'backgroundColor':'gray'});
+
+this.blCss.v = "0.0.1";
+function css(elem,prop) {
+   
+ for(var i in prop) {
+  if(i == 'opacity') {
+   //setOpacity(elem,prop[i]);
+  } else {
+   elem.style[i] = prop[i];
+  }
+ }
+ return elem;
+}
+</textarea>
+
+<textarea id = "blObj" style = "display:none;">
+this.blShowObj = showObj;
+this.blShowObj(this.blShowObj);
+
+ 
+function showObj(obj){
+    this.blShowObj.blV = "v0.5.4";
+    var oBoss = document.getElementById("divBlShowObj");
+    if(!oBoss) {
+       oBoss = document.createElement("div");
+       oBoss.id = "divBlShowObj";
+       oBoss.style.border = "green 1px solid";
+       document.body.appendChild(oBoss);
+     } 
+    if(!oBoss){
+        alert("boss error!");return;
+    }
+    oBoss.innerHTML = "";
+    for(i in obj)
+    {
+      var b = document.createElement("button");
+      b.id = b.innerHTML = i;
+      if(i[0]=="b"&&i[1]=="l") b.style.backgroundColor = "yellow";
+      oBoss.appendChild(b);
+      var d = document.createElement("div");
+      d.innerHTML = obj[i];
+      d.style.border = "blue 1px solid";
+      d.style.backgroundColor = "green";
+      d.style.color = "yellow";
+      oBoss.appendChild(d);
+    }
+}  
+</textarea>
+
+<textarea id = "blScript" style = "display:none;">
+this.blScript = script;
+var s1 = this.blScript("s1","m.js"); 
+
+function script(id,src){
+    var r = document.getElementById(id);
+    if(!r){
+        r = document.createElement("script");
+        r.id = id;
+    }
+    r.src = src; 
+    document.body.appendChild(r);
+    return r;
+}
+
+ 
+</textarea>
+
+
+<textarea id = "blAjax" style = "display:none;">
+function blAjax(){ 
+  this.getData = function (oBoss,src)
+  { 
+     if(!oBoss){alert("boss error!");return;}
+     if(oBoss){
+        var xmlhttp;
+	if (window.XMLHttpRequest)
+	{//"code for IE7+, Firefox, Chrome, Opera, Safari"
+		xmlhttp = new XMLHttpRequest();
+	}
+	else
+	{// code for IE6, IE5
+		xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+	}
+	xmlhttp.boss = oBoss;
+	xmlhttp.src = src;
+	xmlhttp.parseData = function(b,txt) 
+	{
+            if(b)
+            {
+              var d = document.getElementById("idParseData");
+              if(!d){ 
+		  d = document.createElement("div");
+		  d.id = "idParseData";
+	       	  xmlhttp.boss.appendChild(d);
+		  d.n = 0;
+		  d.m = 0;
+
+		  d.style.border = "red 1px solid";
+              }
+ 	      d.n++;
+              var j = JSON.parse(txt);
+              var j1 = j[0];
+	      d.innerHTML = d.m + "=m : n= " + d.n + " sell: " + j1.sell+ " - " + j1.updatetime + "<br>" + txt;
+	    }
+            else
+            {
+              d.m++;
+            }
+            
+            xmlhttp.boss.ajax.getData(xmlhttp.boss,xmlhttp.src);
+	}
+        xmlhttp.onreadystatechange=function()
+	{
+		if (xmlhttp.readyState==4 && xmlhttp.status==200)
+		{
+			xmlhttp.parseData(true,xmlhttp.responseText); 
+		}
+                else
+                {
+                	xmlhttp.parseData(false,0); 
+                }
+	}
+	xmlhttp.open("GET",src,true);
+	xmlhttp.send();
+    }
+  } 
+} 
+var o = document.getElementById("d11");
+if(o) {
+  o.ajax = new blAjax();
+  o.ajax.getData(o,"http://api.baidao.com/api/hq/npdata.do?ids=201");
+}
+else
+{
+  alert("No div 'd11'!");
+}
+</textarea>
+
+
 <textarea id = "blMp4Player" style = "display:none;">
 this.blMp4Player = function (){
- this.blMp4Player.blV = "v0.5.7";
+ this.blMp4Player.blV = "v0.5.9";
+ this.blMp4Player.v059 = "+: if(f.length>1) document.blLoadOK = true;";
+ this.blMp4Player.v058 = "m: d.id = i; auto play next song";
  this.blMp4Player.v057 = "+: v.playObj";
  this.blMp4Player.v056 = "+: onclick : to play";
  this.blMp4Player.v055 = "+: idDirLyr";
@@ -53,19 +203,27 @@ this.blMp4Player = function (){
        {	
           var d = document.createElement("button");
           d.style.border = "1px solid blue";
-       	  d.id = "song"+i;
+       	  d.id = i;//"song"+i;
           d.onclick = function(){
 		var v = document.getElementById("idBlMp4Player");
                 v.playObj(this);
 	  }
           d.innerHTML = f[i];
           boss.appendChild(d);
-       }				 
+       }
+       if(f.length>1) document.blLoadOK = true;				 
    }	
     this.blMp4Player.myTimeFun = function(){	 		
        var p = document.getElementById("idBlMp4Player"); 		
        var lr = document.getElementById("idDivLyr");	 	 
-       lr.innerHTML = new Date();						 
+       lr.innerHTML = new Date();
+       if(p.ended){
+          var v = document.getElementById("idBlMp4Player");
+          var id = parseInt(v.oLast.id)+1;
+          var b = document.getElementById(id);
+          if(b==null) b = document.getElementById("1");	
+          b.click();
+       }						 
    }				
 							
    setInterval(this.blMp4Player.myTimeFun, 1000);
@@ -76,75 +234,6 @@ this.blMp4Player();
 this.blMp4Player.blMakeList();
 </textarea>
 
-<textarea id = "blObj" style = "display:none;">
-this.blShowObj = function(obj){
-    this.blShowObj.blV = "v0.5.2";
-    var oBoss = document.getElementById("divBlShowObj");
-    if(!oBoss) {
-       oBoss = document.createElement("div");
-       oBoss.id = "divBlShowObj";
-       oBoss.style.border = "green 1px solid";
-       document.body.appendChild(oBoss);
-     } 
-    if(!oBoss){
-        alert("boss error!");return;
-    }
-    oBoss.innerHTML = "";
-    for(i in obj)
-    {
-      var b = document.createElement("button");
-      b.id = b.innerHTML = i;
-      if(i[0]=="b"&&i[1]=="l") b.style.backgroundColor = "yellow";
-      oBoss.appendChild(b);
-      var d = document.createElement("div");
-      d.innerHTML = obj[i];
-      d.style.border = "blue 1px solid";
-      d.style.backgroundColor = "green";
-      d.style.color = "yellow";
-      oBoss.appendChild(d);
-    }
-}  
-this.blShowObj(this.blShowObj);
-</textarea>
-
-<textarea id = "blAjax" style = "display:none;">
-function blAjax(){ 
-  this.getData = function (oBoss,src)
-  { 
-     if(!oBoss){alert("boss error!");return;}
-     if(oBoss){
-        var xmlhttp;
-	if (window.XMLHttpRequest)
-	{//"code for IE7+, Firefox, Chrome, Opera, Safari"
-		xmlhttp = new XMLHttpRequest();
-	}
-	else
-	{// code for IE6, IE5
-		xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-	}
-	xmlhttp.boss = oBoss;
-	xmlhttp.src = src;
-	xmlhttp.parseData = function(txt) 
-	{
-		xmlhttp.boss.innerHTML = txt;
-            xmlhttp.boss.ajax.getData(xmlhttp.boss,xmlhttp.src);
-	}
-        xmlhttp.onreadystatechange=function()
-	{
-		if (xmlhttp.readyState==4 && xmlhttp.status==200)
-		{
-			xmlhttp.parseData(xmlhttp.responseText); 
-		}
-	}
-	xmlhttp.open("GET",src,true);
-	xmlhttp.send();
-    }
-  } 
-} 
-var o = document.getElementById("d11");
-o.ajax = new blAjax();
-o.ajax.getData(o,"http://api.baidao.com/api/hq/npdata.do?ids=201");
-</textarea>
 
 
 <textarea id = "blKlines" style = "display:none;">
@@ -165,21 +254,6 @@ function blKlines(idBossDiv,id,src){
 }
 var k1 = blKlines("d2","k1","k.js");
 k1.boss.onclick = function(){k1.click();alert("k1.boss");} 
- 
-</textarea>
-<textarea id = "blScript" style = "display:none;">
-function blScript(id,src){
-    var r = document.getElementById(id);
-    if(!r){
-        r = document.createElement("script");
-        r.id = id;
-    }
-    r.src = src; 
-    document.body.appendChild(r);
-    return r;
-}
-var s1 = blScript("s1","m.js"); 
-
  
 </textarea>
 
@@ -306,6 +380,7 @@ function blCreateUI(){
 	var t = document.getElementsByTagName("textarea");
 	for (var i = 0; i < t.length; i++){
 		var b = document.createElement("button");
+		b.id = t[i].id + "Btn";
 		if("run"==t[i].id) {
 			b.onclick = run;
 			b.style.backgroundColor = "green";
@@ -314,8 +389,32 @@ function blCreateUI(){
 		b.innerHTML = t[i].id;
 		document.body.appendChild(b);
 	}
+	document.blLoadOK = false;
+	function gBlTimerFun(){
+		var s1 = document.getElementById("s1");
+		var blScriptBtn = document.getElementById("blScriptBtn");
+		var runBtn = document.getElementById("runBtn");
+		var fTest = "blNull";
+		if(!s1){
+			if(blScriptBtn) blScriptBtn.click();
+			if(runBtn) runBtn.click();
+		}
+		else if(!document.blLoadOK){
+			fTest = f[0];//"blOK";
+			var blMp4PlayerBtn = document.getElementById("blMp4PlayerBtn");
+		
+			if(blMp4PlayerBtn) blMp4PlayerBtn.click();
+			if(runBtn) runBtn.click();
+			var song1Btn = document.getElementById("1");
+          		if(song1Btn) song1Btn.click();	
+		}
+			var blDbg = document.getElementById("blDbg");
+			blDbg.innerHTML = new Date() + s1 + ":" + fTest;
+	}
+        setInterval(gBlTimerFun, 1000);
 }
 blCreateUI();
+
 
 function blBtnClick() {
 	var id = this.innerHTML;
@@ -359,8 +458,8 @@ function createBat() {
     }
 }
  
-//---------------------------------------------------¡¾ÈÃFirefoxÖ§³ÖoffsetX¡¢offsetY¡¿
-//¼ÆËã¹â±êÏà¶ÔÓÚµÚÒ»¸ö¶¨Î»µÄ¸¸ÔªËØµÄ×ø±ê
+//---------------------------------------------------ï¿½ï¿½ï¿½ï¿½FirefoxÖ§ï¿½ï¿½offsetXï¿½ï¿½offsetYï¿½ï¿½
+//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Úµï¿½Ò»ï¿½ï¿½ï¿½ï¿½Î»ï¿½Ä¸ï¿½Ôªï¿½Øµï¿½ï¿½ï¿½ï¿½ï¿½
 function coordinate(e){
   var o = window.event || e,
       coord,
@@ -373,21 +472,21 @@ function coordinate(e){
   return coord;
 }
 function getOffset(e){
-  var target = e.target, // µ±Ç°´¥·¢µÄÄ¿±ê¶ÔÏó
+  var target = e.target, // ï¿½ï¿½Ç°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¿ï¿½ï¿½ï¿½ï¿½ï¿½
       eventCoord,
       pageCoord,
       offsetCoord;
 
-  // ¼ÆËãµ±Ç°´¥·¢ÔªËØµ½ÎÄµµµÄ¾àÀë
+  // ï¿½ï¿½ï¿½ãµ±Ç°ï¿½ï¿½ï¿½ï¿½Ôªï¿½Øµï¿½ï¿½Äµï¿½ï¿½Ä¾ï¿½ï¿½ï¿½
   pageCoord = getPageCoord(target);
 
-  // ¼ÆËã¹â±êµ½ÎÄµµµÄ¾àÀë
+  // ï¿½ï¿½ï¿½ï¿½ï¿½êµ½ï¿½Äµï¿½ï¿½Ä¾ï¿½ï¿½ï¿½
   eventCoord = {
     X : window.pageXOffset + e.clientX,
     Y : window.pageYOffset + e.clientY
   };
 
-  // Ïà¼õ»ñÈ¡¹â±êµ½µÚÒ»¸ö¶¨Î»µÄ¸¸ÔªËØµÄ×ø±ê
+  // ï¿½ï¿½ï¿½ï¿½ï¿½È¡ï¿½ï¿½êµ½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½Î»ï¿½Ä¸ï¿½Ôªï¿½Øµï¿½ï¿½ï¿½ï¿½ï¿½
   offsetCoord = {
     X : eventCoord.X - pageCoord.X,
     Y : eventCoord.Y - pageCoord.Y
@@ -396,8 +495,8 @@ function getOffset(e){
 }
 function getPageCoord(element){
   var coord = { X : 0, Y : 0 };
-  // ¼ÆËã´Óµ±Ç°´¥·¢ÔªËØµ½¸ù½ÚµãÎªÖ¹£¬
-  // ¸÷¼¶ offsetParent ÔªËØµÄ offsetLeft »ò offsetTop ÖµÖ®ºÍ
+  // ï¿½ï¿½ï¿½ï¿½Óµï¿½Ç°ï¿½ï¿½ï¿½ï¿½Ôªï¿½Øµï¿½ï¿½ï¿½ï¿½Úµï¿½ÎªÖ¹ï¿½ï¿½
+  // ï¿½ï¿½ï¿½ï¿½ offsetParent Ôªï¿½Øµï¿½ offsetLeft ï¿½ï¿½ offsetTop ÖµÖ®ï¿½ï¿½
   while (element){
     coord.X += element.offsetLeft;
     coord.Y += element.offsetTop;
